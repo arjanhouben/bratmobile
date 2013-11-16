@@ -10,14 +10,25 @@ include( ${CMAKE_BINARY_DIR}/externals.include )
 
 set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}\ -std=c++11\ -Wall )
 
-include_directories( ${Boost_INCLUDE_DIR} )
+include_directories(
+    ${Boost_INCLUDE_DIR}
+    include
+)
 
 add_executable( bratmobile
     src/main.cpp
+    src/gpio.cpp
+    include/gpio.h
+)
+
+add_executable( gpiotest
+    src/gpiotest.cpp
+    src/gpio.cpp
+    include/gpio.h
 )
 
 if( UNIX )
-	set( extra_libs pthread )
+    set( extra_libs pthread )
 endif()
 
 target_link_libraries( bratmobile
