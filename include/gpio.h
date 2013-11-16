@@ -85,7 +85,7 @@ struct InputPin : Pin< PIN >
 			return gpio::read< PIN >( Pin< PIN >::gpio_ );
 		}
 
-		bool read() { operator bool(); }
+		bool read() { return operator bool(); }
 };
 
 template< int PIN >
