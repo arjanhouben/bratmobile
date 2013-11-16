@@ -49,14 +49,14 @@ namespace gpio
 	}
 
 	template< int PIN >
-	inline void read( volatile unsigned int *gpio )
+	inline bool read( volatile unsigned int *gpio )
 	{
-		gpio[ 13 ] &= 1 << PIN;
+		return gpio[ 13 ] & ( 1 << PIN );
 	}
 
-	inline void read( volatile unsigned int *gpio, unsigned int pin )
+	inline bool read( volatile unsigned int *gpio, unsigned int pin )
 	{
-		gpio[ 13 ] &= 1 << pin;
+		return gpio[ 13 ] & ( 1 << pin );
 	}
 }
 
