@@ -10,6 +10,7 @@
 #else
 #include <sys/time.h>
 #include <unistd.h>
+#include <signal.h>
 #endif
 
 using namespace std;
@@ -180,6 +181,8 @@ int main( int, char *[] )
 	}
 
 	wiiuse_cleanup( wiimotes, 1 );
+
+	pt.join();
 
 	return 0;
 }

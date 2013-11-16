@@ -16,6 +16,11 @@ add_executable( bratmobile
     src/main.cpp
 )
 
+if( UNIX )
+	set( extra_libs pthread )
+endif()
+
 target_link_libraries( bratmobile
     wiiuse
+    ${extra_libs}
 )
