@@ -16,6 +16,12 @@ using namespace std;
 
 bool volatile run = true;
 
+template < class T >
+T clamp( T value, T mi, T ma )
+{
+	return min( max( mi, value ), ma );
+}
+
 double timer()
 {
 #ifdef _WIN32
@@ -76,20 +82,20 @@ class InputValues
 			y_( 0 ),
 			last_( 0 ) {}
 
-		void set( float x, float y )
+		void set( double x, double y )
 		{
-			x_ = x;
-			y_ = y;
+			x_ = clamp( x, -1.0, 1.0 );
+			y_ = clamp( y, -1.0, 1.0 );
 			last_ = timer();
 		}
 
-		float x()
+		double x()
 		{
 			checkTimeout();
 			return x_;
 		}
 
-		float y()
+		double y()
 		{
 			checkTimeout();
 			return y_;
@@ -107,7 +113,7 @@ class InputValues
 
 	private:
 
-		float x_, y_;
+		double x_, y_;
 		double last_;
 
 } values;
@@ -118,7 +124,9 @@ void controllerLoop( wiimote_t *wiimote )
 	{
 		if ( wiiuse_poll( &wiimote, 1 ) )
 		{
-			values.set( wiimote->exp.classic.rjs.x, wiimote->exp.classic.ljs.y );
+			float throttle = wiimote->exp.classic.ljs.y;
+			if ( throttle >= 0 ) throttle = std::max( throttle, wiimote->exp.classic.r_shoulder );
+			values.set( wiimote->exp.classic.rjs.x, throttle );
 		}
 		else
 		{
