@@ -18,12 +18,12 @@ namespace gpio
 	template< int PIN >
 	inline void output( volatile unsigned int *gpio )
 	{
-		gpio[ PIN / 10 ] |= 7 << ( ( PIN % 10 ) * 3 );
+		gpio[ PIN / 10 ] |= 1 << ( ( PIN % 10 ) * 3 );
 	}
 
 	inline void output( volatile unsigned int *gpio, unsigned int pin )
 	{
-		gpio[ pin / 10 ] |= 7 << ( ( pin % 10 ) * 3 );
+		gpio[ pin / 10 ] |= 1 << ( ( pin % 10 ) * 3 );
 	}
 
 	template< int PIN >
